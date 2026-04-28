@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check-in System for Coaches</title>
+  <meta name="description" content="A done-for-you system that automates reminders, centralizes submissions, and streamlines feedback." />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <link rel="canonical" href="https://apply.coachcheck.in/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CoachCheck" />
+  <meta property="og:title" content="Check-in System for Coaches" />
+  <meta property="og:description" content="A done-for-you system that automates reminders, centralizes submissions, and streamlines feedback." />
+  <meta property="og:url" content="https://apply.coachcheck.in/" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Check-in System for Coaches" />
+  <meta name="twitter:description" content="A done-for-you system that automates reminders, centralizes submissions, and streamlines feedback." />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Check-in System for Coaches",
+      "url": "https://apply.coachcheck.in/",
+      "description": "A done-for-you system that automates reminders, centralizes submissions, and streamlines feedback.",
+      "inLanguage": "en"
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wiym7z76ee");
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:            #0b1326;
+      --surface-low:   #111d35;
+      --surface-mid:   #16233f;
+      --surface-high:  #1c2b4a;
+      --surface-bright:#233354;
+      --primary:       #adc6ff;
+      --primary-cont:  #4d8eff;
+      --on-surface:    #dae2fd;
+      --on-surface-2:  #8fa3cc;
+      --accent:        #ffb786;
+      --text-dim:      #5a7299;
+      --gradient-cta:  linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--on-surface);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── AMBIENT GLOW ── */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.12;
+    }
+    .glow-orb-1 {
+      width: 600px; height: 600px;
+      background: #4d8eff;
+      top: -200px; left: -150px;
+    }
+    .glow-orb-2 {
+      width: 400px; height: 400px;
+      background: #adc6ff;
+      top: 40%; right: -100px;
+    }
+    .glow-orb-3 {
+      width: 300px; height: 300px;
+      background: #ffb786;
+      bottom: 10%; left: 20%;
+      opacity: 0.06;
+    }
+
+    /* ── WRAPPER ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 56px 0 70px;
+    }
+
+    .hero-headline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 800;
+      line-height: 1.07;
+      letter-spacing: -0.03em;
+      color: var(--on-surface);
+      margin-bottom: 28px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.25s forwards;
+    }
+    .hero-headline em {
+      font-style: normal;
+      background: var(--gradient-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--on-surface-2);
+      max-width: 580px;
+      margin: 0 auto 40px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.4s forwards;
+    }
+    .hero-sub strong {
+      color: var(--on-surface);
+      font-weight: 500;
+    }
+
+    .vsl-container {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--surface-high);
+      aspect-ratio: 16 / 9;
+      max-width: 760px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.35s forwards;
+    }
+
+    .vsl-container wistia-player:defined {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ── CALENDAR SECTION ── */
+    .calendar-section {
+      padding: 80px 0 120px;
+    }
+
+    .calendar-header {
+      margin: 56px 0 48px;
+      text-align: center;
+    }
+
+    .calendar-headline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--on-surface);
+      margin-bottom: 16px;
+    }
+    .calendar-headline em {
+      font-style: normal;
+      background: var(--gradient-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .calendar-sub {
+      font-size: 16px;
+      color: var(--on-surface-2);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.65;
+      margin: 0 auto;
+    }
+
+    .calendar-embed {
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--surface-mid);
+      min-height: 650px;
+      position: relative;
+    }
+
+    .cal-inline-root {
+      width: 100%;
+      min-height: 650px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* What's included strip */
+    .included-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface-mid);
+      margin-bottom: 48px;
+    }
+    .included-item {
+      background: var(--surface-low);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .included-item:hover { background: var(--surface-mid); }
+    .included-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .included-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--on-surface);
+      line-height: 1.3;
+    }
+    .included-desc {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.55;
+    }
+
+    .bottom-cta-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .bottom-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 16px 36px;
+      background: var(--gradient-cta);
+      color: #0b1326;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform 300ms cubic-bezier(0.4,0,0.2,1), box-shadow 300ms cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 8px 32px rgba(77,142,255,0.25);
+    }
+    .bottom-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 48px rgba(77,142,255,0.35);
+    }
+    .bottom-cta svg { flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(173,198,255,0.06);
+      padding: 40px 0;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .wrapper { padding: 0 20px; }
+      .included-strip { grid-template-columns: 1fr; }
+      .calendar-embed,
+      .cal-inline-root { min-height: 580px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient glows -->
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="glow-orb glow-orb-3"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrapper">
+      <h1 class="hero-headline">
+        Top-Notch Check-in System
+      </h1>
+
+      <p class="hero-sub">
+        A done-for-you system that automates reminders, centralizes submissions, and streamlines feedback.
+      </p>
+
+      <div class="vsl-container">
+        <script src="https://fast.wistia.com/player.js" async></script>
+        <script src="https://fast.wistia.com/embed/kd19wo35pe.js" async type="module"></script>
+        <style>wistia-player[media-id='kd19wo35pe']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/kd19wo35pe/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
+        <wistia-player media-id="kd19wo35pe" aspect="1.7777777777777777"></wistia-player>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendar Section -->
+  <section class="calendar-section" id="book">
+    <div class="wrapper">
+      <div class="calendar-embed reveal">
+        <div class="cal-inline-root" id="my-cal-inline-discovery-call"></div>
+        <script type="text/javascript">
+          (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+          Cal("init", "discovery-call", {origin:"https://app.cal.com"});
+
+          Cal.ns["discovery-call"]("inline", {
+            elementOrSelector:"#my-cal-inline-discovery-call",
+            config: {"layout":"week_view","useSlotsViewOnSmallScreen":"true"},
+            calLink: "mahdi-badjelmane/discovery-call",
+          });
+
+          Cal.ns["discovery-call"]("ui", {"hideEventTypeDetails":false,"layout":"week_view"});
+        </script>
+      </div>
+
+      <div class="calendar-header reveal">
+        <h2 class="calendar-headline">
+          Ready to close the gap?<br>
+          <em>Book your free call.</em>
+        </h2>
+        <p class="calendar-sub">
+          One conversation. I'll look at your current setup and tell you exactly what the system would look like for your business — no obligation.
+        </p>
+      </div>
+
+      <!-- What's included strip -->
+      <div class="included-strip reveal">
+        <div class="included-item">
+          <div class="included-icon">⚡</div>
+          <p class="included-label">Automated reminders & nudges</p>
+          <p class="included-desc">Clients get personalized check-in reminders. Late? A follow-up goes out automatically.</p>
+        </div>
+        <div class="included-item">
+          <div class="included-icon">📥</div>
+          <p class="included-label">Centralized submission dashboard</p>
+          <p class="included-desc">Every submission in one place, organized, labeled, full history visible at a glance.</p>
+        </div>
+        <div class="included-item">
+          <div class="included-icon">💬</div>
+          <p class="included-label">Clean feedback delivery</p>
+          <p class="included-desc">Deliver text or video feedback instantly — clients receive a premium dedicated page.</p>
+        </div>
+      </div>
+
+      <div class="bottom-cta-wrap reveal">
+        <a href="#book" class="bottom-cta">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Book Now
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrapper">
+      <p class="footer-logo">CheckinHQ</p>
+      <p class="footer-tagline">The check-in system built for serious coaches.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
