@@ -32,14 +32,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wiym7z76ee");
-  </script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -334,6 +326,26 @@
       .calendar-embed,
       .cal-inline-root { min-height: 580px; }
     }
+
+    @media (max-width: 768px) {
+      body::before,
+      .glow-orb { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .hero-headline,
+      .hero-sub,
+      .vsl-container,
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -347,18 +359,18 @@
   <section class="hero">
     <div class="wrapper">
       <h1 class="hero-headline">
-        Top-Notch Check-in System
+        Deliver Top-Notch Check-ins at Scale
       </h1>
 
       <p class="hero-sub">
         A done-for-you system that automates reminders, centralizes submissions, and streamlines feedback.
       </p>
 
-      <div class="vsl-container">
-        <script src="https://fast.wistia.com/player.js" async></script>
-        <script src="https://fast.wistia.com/embed/kd19wo35pe.js" async type="module"></script>
+      <div class="vsl-container js-lazy-vsl" data-media-id="kd19wo35pe">
         <style>wistia-player[media-id='kd19wo35pe']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/kd19wo35pe/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
-        <wistia-player media-id="kd19wo35pe" aspect="1.7777777777777777"></wistia-player>
+        <button type="button" class="bottom-cta js-load-vsl" aria-label="Load and play video">
+          Play Video
+        </button>
       </div>
     </div>
   </section>
@@ -366,21 +378,9 @@
   <!-- Calendar Section -->
   <section class="calendar-section" id="book">
     <div class="wrapper">
-      <div class="calendar-embed reveal">
+      <div class="calendar-embed reveal js-lazy-cal" data-cal-namespace="discovery-call">
         <!-- Cal inline embed code begins -->
         <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-discovery-call"></div>
-        <script type="text/javascript">
-          (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-          Cal("init", "discovery-call", {origin:"https://app.cal.com"});
-
-          Cal.ns["discovery-call"]("inline", {
-            elementOrSelector:"#my-cal-inline-discovery-call",
-            config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
-            calLink: "mahdi-badjelmane/discovery-call",
-          });
-
-          Cal.ns["discovery-call"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
-        </script>
         <!-- Cal inline embed code ends -->
       </div>
 
@@ -443,6 +443,96 @@
       });
     }, { threshold: 0.1 });
     reveals.forEach(el => observer.observe(el));
+
+    function loadScript(src, attributes = {}) {
+      return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) {
+          resolve();
+          return;
+        }
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = true;
+        Object.entries(attributes).forEach(([key, value]) => script.setAttribute(key, value));
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    function loadClarity() {
+      if (window.__clarityLoaded) return;
+      window.__clarityLoaded = true;
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "wiym7z76ee");
+    }
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadClarity, { timeout: 4000 });
+    } else {
+      window.addEventListener('load', () => setTimeout(loadClarity, 1500), { once: true });
+    }
+
+    const vslContainer = document.querySelector('.js-lazy-vsl');
+    const vslButton = document.querySelector('.js-load-vsl');
+    let vslLoaded = false;
+
+    async function loadVsl() {
+      if (vslLoaded || !vslContainer) return;
+      vslLoaded = true;
+      const mediaId = vslContainer.dataset.mediaId;
+      await loadScript('https://fast.wistia.com/player.js');
+      await loadScript(`https://fast.wistia.com/embed/${mediaId}.js`, { type: 'module' });
+      vslContainer.innerHTML = `<wistia-player media-id="${mediaId}" aspect="1.7777777777777777"></wistia-player>`;
+    }
+
+    if (vslButton) vslButton.addEventListener('click', loadVsl);
+
+    if (vslContainer && 'IntersectionObserver' in window) {
+      const vslObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadVsl();
+            vslObserver.disconnect();
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+      vslObserver.observe(vslContainer);
+    }
+
+    const calContainer = document.querySelector('.js-lazy-cal');
+    let calLoaded = false;
+
+    async function loadCal() {
+      if (calLoaded || !calContainer) return;
+      calLoaded = true;
+      await loadScript('https://app.cal.com/embed/embed.js');
+      const namespace = calContainer.dataset.calNamespace;
+      window.Cal("init", namespace, { origin: "https://app.cal.com" });
+      window.Cal.ns[namespace]("inline", {
+        elementOrSelector:"#my-cal-inline-discovery-call",
+        config: { layout: "month_view", useSlotsViewOnSmallScreen: "true" },
+        calLink: "mahdi-badjelmane/discovery-call",
+      });
+      window.Cal.ns[namespace]("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    }
+
+    if (calContainer && 'IntersectionObserver' in window) {
+      const calObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadCal();
+            calObserver.disconnect();
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+      calObserver.observe(calContainer);
+    } else {
+      loadCal();
+    }
   </script>
 
 </body>
