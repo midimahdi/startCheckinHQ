@@ -387,9 +387,21 @@
   <!-- Calendar Section -->
   <section class="calendar-section" id="book">
     <div class="wrapper">
-      <div class="calendar-embed reveal js-lazy-cal" data-cal-namespace="discovery-call">
+      <div class="calendar-embed reveal">
         <!-- Cal inline embed code begins -->
         <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-discovery-call"></div>
+        <script type="text/javascript">
+          (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+          Cal("init", "discovery-call", {origin:"https://app.cal.com"});
+
+          Cal.ns["discovery-call"]("inline", {
+            elementOrSelector:"#my-cal-inline-discovery-call",
+            config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
+            calLink: "mahdi-badjelmane/discovery-call",
+          });
+
+          Cal.ns["discovery-call"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+        </script>
         <!-- Cal inline embed code ends -->
       </div>
 
@@ -512,36 +524,6 @@
       vslObserver.observe(vslContainer);
     }
 
-    const calContainer = document.querySelector('.js-lazy-cal');
-    let calLoaded = false;
-
-    async function loadCal() {
-      if (calLoaded || !calContainer) return;
-      calLoaded = true;
-      await loadScript('https://app.cal.com/embed/embed.js');
-      const namespace = calContainer.dataset.calNamespace;
-      window.Cal("init", namespace, { origin: "https://app.cal.com" });
-      window.Cal.ns[namespace]("inline", {
-        elementOrSelector:"#my-cal-inline-discovery-call",
-        config: { layout: "month_view", useSlotsViewOnSmallScreen: "true" },
-        calLink: "mahdi-badjelmane/discovery-call",
-      });
-      window.Cal.ns[namespace]("ui", { hideEventTypeDetails: false, layout: "month_view" });
-    }
-
-    if (calContainer && 'IntersectionObserver' in window) {
-      const calObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            loadCal();
-            calObserver.disconnect();
-          }
-        });
-      }, { rootMargin: '300px 0px' });
-      calObserver.observe(calContainer);
-    } else {
-      loadCal();
-    }
   </script>
 
 </body>
